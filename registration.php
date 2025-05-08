@@ -18,8 +18,8 @@ if (isset($_POST['multisave'])) {
   $email = $_POST['email'];
   $username = $_POST['username'];
   $password = password_hash($_POST['password'],PASSWORD_BCRYPT);
-  $firstname = $_POST['first_name'];
-  $lastname = $_POST['last_name'];
+  $firstname = $_POST['firstname'];
+  $lastname = $_POST['lastname'];
   $birthday = $_POST['birthday'];
   $sex = $_POST['sex'];
   $phone = $_POST['phone'];
@@ -34,7 +34,7 @@ if (isset($_POST['multisave'])) {
     $_SESSION['error'] = "Sorry, there was an error uploading your file or the file is invalid.";
   }else{
 
-    $userID = $con->signupUser($firstname, $lastname, $birthday, $sex, $email, $phone, $username,  $password, $profile_picture_path);
+    $userID = $con->signupUser($firstname, $lastname, $birthday, $email, $sex, $phone, $username,  $password, $profile_picture_path);
     
     if ($userID) {
       $street = $_POST['user_street'];
@@ -80,15 +80,19 @@ if (isset($_POST['multisave'])) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="./package/dist/sweetalert2.css">
+  
 
   <!-- Bootstrap CSS -->
+  
+
+  <link rel="stylesheet" href="./package/dist/sweetalert2.css">
   <link rel="stylesheet" href="./bootstrap-4.5.3-dist/css/bootstrap.css">
   <link rel="stylesheet" href="./bootstrap-5.3.3-dist/css/bootstrap.css">
+
   <!-- JQuery for Address Selector -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
 
   <title>LMS | Registration</title>
   <style>
@@ -101,12 +105,16 @@ if (isset($_POST['multisave'])) {
   </style>
 </head>
 <body>
+<script src="package/dist/sweetalert2.js"></script>
+
 <?php
 // Output SweetAlert script if set
 if (!empty($sweetAlertConfig)) {
-    echo $sweetAlertConfig;
-    exit; // Stop further execution
+  echo $sweetAlertConfig;  // This will print the SweetAlert2 code
+  exit;  // Ensure no further processing happens
 }
+
+
 ?>
 <div class="container custom-container rounded-3 shadow my-5 p-3 px-5">
   <h3 class="text-center mt-4">Registration Form</h3>
@@ -253,7 +261,7 @@ if (!empty($sweetAlertConfig)) {
   </form>
 </div>
 
-<script src="package/dist/sweetalert2.js"></script>
+
 
 <script src="./bootstrap-5.3.3-dist/js/bootstrap.js"></script>
 <!-- Script for Address Selector -->
@@ -375,6 +383,8 @@ function validateStep(step) {
       
     });
   </script>
+
+
   
   </body>
   </html>
