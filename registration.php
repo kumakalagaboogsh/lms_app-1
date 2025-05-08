@@ -16,6 +16,7 @@ $sweetAlertConfig = "";
 if (isset($_POST['multisave'])) {
   
   $email = $_POST['email'];
+  $username = $_POST['username'];
   $password = password_hash($_POST['password'],PASSWORD_BCRYPT);
   $firstname = $_POST['first_name'];
   $lastname = $_POST['last_name'];
@@ -24,12 +25,45 @@ if (isset($_POST['multisave'])) {
   $phone = $_POST['phone'];
 
 
+
   $profile_picture_path = handleFileUpload($_FILES["profile_picture"]);
   
+  
+
   if ($profile_picture_path === false) {
     $_SESSION['error'] = "Sorry, there was an error uploading your file or the file is invalid.";
   }else{
+
+    $userID = $con->signupUser($firstname, $lastname, $birthday, $sex, $email, $phone, $username,  $password, $profile_picture_path);
     
+    if ($userID) {
+      $street = $_POST['user_street'];
+      $barangay = $_POST['user_barangay'];
+      $city = $_POST['user_city'];
+      $province = $_POST['user_province'];
+
+      if ($con->insertAddress($userID, $street, $barangay, $city, $province)){
+        $sweetAlertConfig = "
+        <script>
+        Swal.fire({
+          icon: 'success',
+          title: 'Registration Successful',
+          text: 'Your account has been created succesfully!',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+        if (result.isConfirmed) {
+        window.location.href = 'login.php';
+        }
+        });
+        </script> ";
+      }else{
+        $_SESSION['error'] = "Error occured while inserting address. Please try again.";
+      }
+
+    }else{
+      $_SESSION['error'] = "Sorry, there wan an error signing up.";
+    }
+
   }
 
 }
