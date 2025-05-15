@@ -1,7 +1,7 @@
 <?php
  require_once '../classes/database.php';
 
-header('Content-Type: application/json'); // Ensure JSON response
+header('Content-Type: application/json'); 
 
 if (isset($_POST['email'])) {
     $email = $_POST['email']; 
@@ -25,4 +25,4 @@ if (isset($_POST['email'])) {
 }
 
 ?>
- <!-- SQL query that checks if a user is existing or not (should be pasted in the check_email.php) (CODE ENDS HERE) -->
+ 
